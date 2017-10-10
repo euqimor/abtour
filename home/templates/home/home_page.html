@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/owl/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl/owl.theme.default.min.css" %}">
+{% endblock %}
+
+{% block content %}
+
+    <header>
+        <nav class="navbar navbar-default navbar-fixed-top transparent">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand navbar-link" href="/" id="logo-link" style="padding-top: 15px;">
+                        {% image page.logo original as logo %}
+                        <img class="img-responsive" height="100px" id="logo" src="{{ logo.url }}" style="max-height: 100px;">
+                    </a>
+                    <a data-rel="external" class="logo-text" href="tel:+7%20495%20415%2017%2034"><h3>8 (495) 415-17-34</h3></a>
+                    <button class="navbar-toggle collapsed navbar-right" data-target="#navcol-1" data-toggle="collapse">
+                        <span class="sr-only">Открыть меню</span>
+                        <span class="icon-bar"></span><span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav navbar-right" id="right-links">
+                        <li class="" role="presentation"><a href="#about">О нас</a></li>
+                        <li class="" role="presentation"><a href="#contact">Контакты</a></li>
+                        <li role="presentation"><a href="#contact-col" class="btn-custom btn btn-default" id="enquire-btn">Оставить заявку</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+{#    <a href="#" class="scrollToTop" style="background: url({% static "img/scroll_to_top.png" %}) 0 0 / cover; display: block;"></a>#}
+
+    <div class="owl-carousel owl-theme">
+        {% for item in page.carousel_images.all %}
+            {% image item.image original as photo %}
+            <div class="owl-lazy slide-bg" data-src="{{ photo.url }}">
+                <div class="text-center carousel-caption hero-text no-right-click"><h1>{{ page.carousel_title }}</h1></div>
+                <img class="no-right-click" src="/media/original_images/blank.png">
+            </div>
+        {% endfor %}
+    </div>
+
+    <section class="mp-content" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="text-center">{{ page.intro_header }}</h2>
+                    <div>
+                        <div>
+                            {{ page.intro_body|richtext }}
+                        </div>
+                    </div>
+                    <p class="text-center"><a href="https://www.instagram.com/abtour_ru/">{{ page.intro_hashtags }}</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="deep-yellow mp-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <p class="text-center"><i class="fa fa-plane fa-3x aos-init aos-animate" data-aos="fade-up" data-aos-duration="400" ></i></p>
+                    <h3 class="text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="400" >{{ page.column1_header }}</h3>
+                    <p class="text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="400" ></p>
+                        {{ page.column1_body|richtext }}
+                    <p></p>
+                </div>
+                <div class="col-md-4 col-sm-4 small-pad-top">
+                    <p class="text-center"><i class="fa fa-heart fa-3x aos-init aos-animate" data-aos="fade-up" data-aos-duration="400" ></i></p>
+                    <h3 class="text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="400" >{{ page.column2_header }}</h3>
+                    <p class="text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="400" ></p>
+                        {{ page.column2_body|richtext }}
+                    <p></p>
+                </div>
+                <div class="col-md-4 col-sm-4 small-pad-top">
+                    <p class="text-center"><i class="fa fa-rub fa-3x aos-init aos-animate" data-aos="fade-up" data-aos-duration="400" ></i></p>
+                    <h3 class="text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="400" >{{ page.column3_header }}</h3>
+                    <p class="text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="400" ></p>
+                        {{ page.column3_body|richtext }}
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="row equalize">
+        {% image page.form_image original as form_image %}
+        <div class="col-md-7 col-sm-7 hidden-xs" style="background:url({{ form_image.url }});background-size:cover;background-position:center;min-height:500px;"></div>
+        <div class="col-md-5 col-sm-12 col-xs-12" id="contact-col">
+            <h2 class="text-uppercase text-center">{{ page.form_header }}</h2>
+            <p></p>
+            <p>{{ page.form_intro|richtext }}</p>
+            <p></p>
+            <form action="." method="POST">
+                {% csrf_token %}
+                <div class="form-group has-feedback">
+                    {{ form.name }}<i aria-hidden="true" class="form-control-feedback fa fa-user"></i>
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form.email }}<i aria-hidden="true" class="form-control-feedback fa fa-envelope"></i>
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form.phone }}<i aria-hidden="true" class="form-control-feedback fa fa-phone"></i>
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form.where }}<i aria-hidden="true" class="form-control-feedback fa fa-plane"></i>
+                </div>
+                <div class="form-group">
+                    {{ form.budget }}{{ form.currency }}
+                </div>
+                <div class='input-group date'>
+                        {{ form.start_date }}
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </span>
+                        {{ form.end_date }}
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </span>
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form.num_adults }}{{ form.num_kids }}
+                </div>
+                <div class="form-group">
+                    {{ form.comment }}
+                </div>
+                <button class="btn btn-default btn-custom" type="submit">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="mp-content deep-yellow" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>{{ page.small_columns_title }}</h3>
+                    <p>{{ page.small_columns_intro|richtext }}</p>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="white-box">
+                        <p><i class="fa fa-location-arrow"></i></p>
+                        <h5 class="text-uppercase">{{ page.small_column1_header }}</h5>
+                        <p>{{ page.small_column1_body|richtext }}</p></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="white-box">
+                        <p><i class="fa fa-phone"></i></p>
+                        <h5 class="text-uppercase">{{ page.small_column2_header }}</h5><a data-rel="external" href="tel:+7%20495%20415%2017%2034">
+                        <p>{{ page.small_column2_body|richtext }}</p></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="white-box">
+                        <p><i class="fa fa-envelope"></i></p>
+                        <h5 class="text-uppercase">{{ page.small_column3_header }}</h5>
+                        <p>{{ page.small_column3_body|richtext }}</p></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="white-box">
+                        <p><i class="fa fa-clock-o"></i></p>
+                        <h5 class="text-uppercase">{{ page.small_column4_header }}</h5>
+                        <p>{{ page.small_column4_body|richtext }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{%  block extra_js %}
+<script type="text/javascript" src="{% static "js/owl.carousel.min.js" %}"></script>
+{% endblock %}

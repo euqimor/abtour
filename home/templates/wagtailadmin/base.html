@@ -1,0 +1,10 @@
+{% extends "wagtailadmin/base.html" %}
+{% load staticfiles %}
+
+{% block branding_logo %}
+    <img src="{% static "img/logo_AB-TOUR.svg" %}" alt="AB-Tour" width="80" />
+{% endblock %}
+
+{% block branding_favicon %}
+    <link rel="shortcut icon" href="{% static "img/logo_AB-TOUR.png" %}" />
+{% endblock %}
