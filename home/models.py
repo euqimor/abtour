@@ -96,12 +96,15 @@ class HomePage(Page):
 
     def serve(self, request, *args, **kwargs):
         from home.forms import RequestForm
+        from django.contrib import messages
 
         if request.method == 'POST':
             form = RequestForm(request.POST)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect('/')
+            messages.info(request, 'Что-то пошло не так')
+            return HttpResponseRedirect('/')
 
         else:
             form = RequestForm()
