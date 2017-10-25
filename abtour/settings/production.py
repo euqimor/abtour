@@ -1,11 +1,11 @@
 from __future__ import absolute_import, unicode_literals
+from os import environ
 
 from .base import *
 
 DEBUG = False
 
-with open('secret.txt') as f:
-    SECRET_KEY = f.read().strip()
+SECRET_KEY = environ['django_prod_secret']
 
 try:
     from .local import *

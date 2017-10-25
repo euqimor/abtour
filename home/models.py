@@ -1,4 +1,5 @@
 from __future__ import absolute_import, unicode_literals
+from os import environ
 
 from requests import post
 
@@ -14,12 +15,9 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, Inli
 from wagtail.wagtailforms.edit_handlers import FormSubmissionsPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+mg_api_key = environ['mg_api_key']
 
-with open('mg_key.txt') as f:
-    mg_api = f.read().strip()
-
-with open('mg_url.txt') as f:
-    mg_api_url = f.read().strip()
+mg_api_url = environ['mg_api_url']
 
 
 class HomePage(Page):
@@ -133,7 +131,7 @@ class HomePage(Page):
 
                 post(
                     mg_api_url,
-                    auth=("api", mg_api),
+                    auth=("api", mg_api_key),
                     data={"from": "Сайт АБ-Тур <postmaster@sandboxeb23fad28ee149ebab351869ef8ce5bf.mailgun.org>",
                           "to": "romique@gmail.com",
                           "subject": "Заявка от {}".format(data.name),
