@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'wagtailfontawesome',
+    'storages',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -69,6 +70,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'abtour.urls'
+X_FRAME_OPTIONS = 'DENY'
+SECURE_BROWSER_XSS_FILTER = 'True'
+
 
 TEMPLATES = [
     {
@@ -141,6 +145,13 @@ MEDIA_URL = '/media/'
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+
+#AWS S3 settings and credentials
+AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "abtour"
@@ -149,5 +160,5 @@ WAGTAIL_SITE_NAME = "abtour"
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://ab-tour.ru'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '.ab-tour.ru', 'thawing-oasis-26467.herokuapp.com', 'abtour.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '.ab-tour.ru', 'abtour.herokuapp.com']
 
