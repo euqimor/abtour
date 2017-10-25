@@ -106,18 +106,23 @@
                 <div class="form-group has-feedback">
                     {{ form.name }}<i aria-hidden="true" class="form-control-feedback fa fa-user"></i>
                 </div>
+                    {{ form.name.errors }}
                 <div class="form-group has-feedback">
                     {{ form.email }}<i aria-hidden="true" class="form-control-feedback fa fa-envelope"></i>
                 </div>
+                    {{ form.email.errors }}
                 <div class="form-group has-feedback">
                     {{ form.phone }}<i aria-hidden="true" class="form-control-feedback fa fa-phone"></i>
                 </div>
+                    <p>{{ form.phone.errors }}</p>
                 <div class="form-group has-feedback">
                     {{ form.where }}<i aria-hidden="true" class="form-control-feedback fa fa-plane"></i>
                 </div>
+                    {{ form.where.errors }}
                 <div class="form-group">
                     {{ form.budget }}{{ form.currency }}
                 </div>
+                    {{ form.budget.errors }}
                 <div class='input-group date'>
                         {{ form.start_date }}
                         <span class="input-group-addon">
@@ -131,6 +136,8 @@
                 <div class="form-group has-feedback">
                     {{ form.num_adults }}{{ form.num_kids }}
                 </div>
+                    {{ form.num_adults.errors }}
+                    {{ form.num_kids.errors }}
                 <div class="form-group">
                     {{ form.comment }}
                 </div>
@@ -180,15 +187,36 @@
         </div>
     </section>
 
+
+
+    {% if messages %}
+        {% for message in messages %}
+            <div id="messageModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{ message }}</h4>
+                  </div>
+                    {% if form.non_field_errors %}
+                        <div class="modal-body">
+                            <h3>{{ form.non_field_errors }}</h3>
+                        </div>
+                    {% endif %}
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ОК</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <script>
+                $("#messageModal").modal();
+            </script>
+        {% endfor %}
+    {% endif %}
+
 {% endblock %}
 
 {%  block extra_js %}
     <script type="text/javascript" src="{% static "js/owl.carousel.min.js" %}"></script>
-    {% if messages %}
-        {% for message in messages %}
-            <script>
-                alert('{{ message }}');
-            </script>
-        {% endfor %}
-    {% endif %}
 {% endblock %}

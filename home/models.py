@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+from requests import post
+
 from django.db import models
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -7,15 +9,17 @@ from django.http import HttpResponseRedirect
 from modelcluster.fields import ParentalKey
 
 from wagtail.wagtailcore.models import Page, Orderable
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, \
-                                                PageChooserPanel, InlinePanel, \
-                                                StreamFieldPanel
+from wagtail.wagtailcore.fields import RichTextField
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailforms.edit_handlers import FormSubmissionsPanel
-from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+
+with open('mg_key.txt') as f:
+    mg_api = f.read().strip()
+
+with open('mg_url.txt') as f:
+    mg_api_url = f.read().strip()
 
 
 class HomePage(Page):
@@ -101,10 +105,50 @@ class HomePage(Page):
         if request.method == 'POST':
             form = RequestForm(request.POST)
             if form.is_valid():
-                form.save()
+                data = form.get_data()
+                data.save()
+
+                email_body = 'Имя: {}\n' \
+                             'Куда: {}\n' \
+                             'С: {}\n' \
+                             'По: {}\n' \
+                             'Взрослых: {}\n' \
+                             'Детей: {}\n' \
+                             'Бюджет: {} {}\n' \
+                             '\nКомментарии: {}\n\n' \
+                             'Телефон: {}\n' \
+                             'Email: {}\n'.format(
+                    data.name,
+                    data.where,
+                    data.start_date,
+                    data.end_date,
+                    data.num_adults,
+                    data.num_kids,
+                    data.budget,
+                    data.currency,
+                    data.comment,
+                    data.phone,
+                    data.email
+                )
+
+                post(
+                    mg_api_url,
+                    auth=("api", mg_api),
+                    data={"from": "Сайт АБ-Тур <postmaster@sandboxeb23fad28ee149ebab351869ef8ce5bf.mailgun.org>",
+                          "to": "romique@gmail.com",
+                          "subject": "Заявка от {}".format(data.name),
+                          "text": email_body
+                          }
+                )
+                messages.info(request, 'Заявка принята, спасибо!')
                 return HttpResponseRedirect('/')
-            messages.info(request, 'Что-то пошло не так')
-            return HttpResponseRedirect('/')
+
+            else:
+                messages.info(request, 'Ошибка. Проверьте заполнение формы.')
+                return render(request, 'home/home_page.html', {
+                    'page': self,
+                    'form': form,
+                })
 
         else:
             form = RequestForm()

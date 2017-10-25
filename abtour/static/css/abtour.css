@@ -199,7 +199,7 @@ td,
 th {
     padding: 0
 }
-/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+
 
 @media print {
     *,
@@ -274,8 +274,8 @@ th {
 }
 @font-face {
     font-family: 'Glyphicons Halflings';
-    src: url('/abtour/static/fonts/glyphicons-halflings-regular.eot');
-    src: url('/abtour/static/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/abtour/static/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('/abtour/static/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/abtour/static/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/abtour/static/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg')
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg')
 }
 .glyphicon {
     position: relative;
@@ -1420,6 +1420,9 @@ a.bg-danger:hover {
     padding-bottom: 9px;
     margin: 40px 0 20px;
     border-bottom: 1px solid #eee
+}
+ul.errorlist {
+    list-style-image: url('../img/x.png');
 }
 ol,
 ul {
