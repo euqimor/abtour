@@ -149,5 +149,5 @@ WAGTAIL_SITE_NAME = "abtour"
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://ab-tour.ru'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '.ab-tour.ru', 'thawing-oasis-26467.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '.ab-tour.ru', 'thawing-oasis-26467.herokuapp.com', 'abtour.herokuapp.com']
 
