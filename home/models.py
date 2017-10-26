@@ -133,7 +133,7 @@ class HomePage(Page):
                     mg_api_url,
                     auth=("api", mg_api_key),
                     data={"from": "Сайт АБ-Тур <postmaster@sandboxeb23fad28ee149ebab351869ef8ce5bf.mailgun.org>",
-                          "to": "romique@gmail.com", #info@ab-tour.ru",
+                          "to": "romique@gmail.com, info@ab-tour.ru",
                           "subject": "Заявка от {}".format(data.name),
                           "text": email_body
                           }
