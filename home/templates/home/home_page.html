@@ -219,4 +219,11 @@
 
 {%  block extra_js %}
     <script type="text/javascript" src="{% static "js/owl.carousel.min.js" %}"></script>
+    {% if anchor %}
+            <script type='text/javascript'>
+                $(document).ready(function(){
+                window.location = '#{{ anchor }}'
+                });
+            </script>
+    {% endif %}
 {% endblock %}

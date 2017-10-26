@@ -37,7 +37,7 @@ class RequestForm(forms.Form):
     def clean(self):
         cleaned_data = super(RequestForm, self).clean()
         if not (cleaned_data.get('email') or cleaned_data.get('phone')):
-            raise forms.ValidationError('Пожалуйста оставьте телефон или email, чтобы мы могли с Вами связаться')
+            raise forms.ValidationError('Пожалуйста, оставьте телефон или email, чтобы мы могли с Вами связаться')
         if not (cleaned_data.get('num_adults') or cleaned_data.get('num_kids')):
-            raise forms.ValidationError('Пожалуйста укажите количество отдыхающих')
+            raise forms.ValidationError('Пожалуйста, укажите количество отдыхающих')
         return cleaned_data

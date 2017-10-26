@@ -146,6 +146,7 @@ class HomePage(Page):
                 return render(request, 'home/home_page.html', {
                     'page': self,
                     'form': form,
+                    'anchor': 'contact-col',
                 })
 
         else:
