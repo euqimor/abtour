@@ -6,15 +6,15 @@ class RequestForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control input-lg', 'id':'id_name', 'maxlength':'100', 'name':'name', 'placeholder':'Ваше имя', 'type':'text'}), label= 'Ваше имя', max_length=100)
     start_date = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control input-lg', 'id':'id_startdate', 'maxlength':'30', 'name':'name', 'placeholder':'С', 'type':'text'}), label='С', input_formats=['%d.%m.%Y'])
     end_date = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control input-lg', 'id':'id_enddate', 'maxlength':'30', 'name':'name', 'placeholder':'По', 'type':'text'}),label='По', input_formats=['%d.%m.%Y'])
-    num_adults = forms.IntegerField(label='Взрослых', widget=forms.NumberInput(attrs={'class':'form-persons form-control input-lg', 'id':'id_adults', 'name':'name', 'placeholder':'Взрослых'}), min_value=0, max_value=30, required=False)
-    num_kids = forms.IntegerField(label='Детей', widget=forms.NumberInput(attrs={'class':'form-persons form-control input-lg', 'id':'id_kids', 'name':'name', 'placeholder':'Детей'}), min_value=0, max_value=30, required=False)
+    num_adults = forms.IntegerField(label='Взрослых', widget=forms.NumberInput(attrs={'class':'form-persons form-control input-lg', 'id':'id_adults', 'name':'name', 'placeholder':'Взрослых'}), min_value=0, max_value=50, required=False)
+    num_kids = forms.IntegerField(label='Детей', widget=forms.NumberInput(attrs={'class':'form-persons form-control input-lg', 'id':'id_kids', 'name':'name', 'placeholder':'Детей'}), min_value=0, max_value=50, required=False)
     where = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control input-lg', 'id':'id_where', 'maxlength':'100', 'name':'name', 'placeholder':'Куда', 'type':'text'}), label='Куда', max_length=100)
     budget = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-budget form-control input-lg', 'id':'id_budget', 'name':'name', 'placeholder':'Ваш бюджет'}),label='Ваш бюджет')
     currency = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-currency form-control input-lg', 'id':'id_currency'}), label='Валюта', choices=[('RUB', '₽'),('EUR', '€'), ('USD','$')])
     comment = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control input-lg', 'id':'id_comment', 'placeholder':'Комментарии и пожелания'}), label='Комментарии и пожелания', max_length=1000, required=False)
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control input-lg', 'id':'id_email', 'placeholder':'address@yourmail.ru'}), label='Ваша почта', required=False)
-    phone_error_message = 'Номер телефона должен быть введён без скобок, тире и пробелов. Например: +74954151734, 89671234567 или 9267654321'
-    phone = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control input-lg', 'id':'id_phone', 'maxlength':'15', 'name':'name', 'placeholder':'89671234567', 'type':'text'}), label='Телефон (только цифры)', strip=True, validators=[RegexValidator(regex=r'^(?:(?:\+?7)|8)?\d{9,15}$', message=phone_error_message)], required=False)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control input-lg', 'id':'id_email', 'placeholder':'Ваш email'}), label='Ваша почта', required=False)
+    phone_error_message = 'Пожалуйста, введите номер телефона в указанном формате'
+    phone = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control input-lg', 'id':'id_phone', 'maxlength':'15', 'name':'name', 'placeholder':'Ваш телефон', 'type':'text'}), label='Телефон (только цифры)', strip=True, validators=[RegexValidator(regex=r'^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$', message=phone_error_message)], required=False)
 
     def get_data(self):
         obj = TouristRequest()

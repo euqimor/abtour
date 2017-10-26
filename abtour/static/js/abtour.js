@@ -17,6 +17,11 @@ $(document).ready(function(){
   href_section_scroll();
 });
 
+$(function ($) {
+    $('#id_phone').mask("+7(999)999-99-99");
+    $('#id_budget').mask("?999999999",{placeholder:" "});
+});
+
 $(window).scroll(ScrollChange);
 
 function href_target_blank(){
