@@ -23,7 +23,7 @@
     </section>
 
         <section class="offers_content deep-yellow mp-content">
-        {% if page.special_offers %}
+        {% if page.special_offers.all|length > 0 %}
         <div class="container">
         <div class="list-group">
             {% for item in page.special_offers.all %}
