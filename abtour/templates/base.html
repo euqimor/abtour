@@ -1,4 +1,4 @@
-{% load static wagtailuserbar %}
+{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags %}
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -52,6 +52,37 @@
 
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
+
+
+        <header>
+            <nav class="navbar navbar-default navbar-fixed-top transparent">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand navbar-link" href="/" id="logo-link" style="padding-top: 15px;">
+                            {% if page.specific.logo %}
+                                {% image page.specific.logo original as logo %}
+                            {% elif page.get_parent %}
+                                {% image page.get_parent.specific.logo original as logo %}
+                            {% endif %}
+                            <img class="img-responsive" height="100px" id="logo" src="{{ logo.url }}" style="max-height: 100px;">
+                        </a>
+                        <a data-rel="external" class="logo-text" href="tel:+7%20495%20415%2017%2034"><h3>8 (495) 415-17-34</h3></a>
+                        <button class="navbar-toggle collapsed navbar-right" data-target="#navcol-1" data-toggle="collapse">
+                            <span class="sr-only">Открыть меню</span>
+                            <span class="icon-bar"></span><span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navcol-1">
+                        <ul class="nav navbar-nav navbar-right" id="right-links">
+                            <li class="" role="presentation"><a href="#about">О нас</a></li>
+                            <li class="" role="presentation"><a href="#contact">Контакты</a></li>
+                            <li role="presentation"><a href="#contact-col" class="btn-custom btn btn-default" id="enquire-btn">Оставить заявку</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
 
 
         {% block content %}{% endblock %}

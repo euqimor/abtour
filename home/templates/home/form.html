@@ -1,0 +1,42 @@
+<form action="." method="POST">
+    {% csrf_token %}
+    <div class="form-group has-feedback">
+        {{ form.name }}<i aria-hidden="true" class="form-control-feedback fa fa-user"></i>
+    </div>
+        {{ form.name.errors }}
+    <div class="form-group has-feedback">
+        {{ form.email }}<i aria-hidden="true" class="form-control-feedback fa fa-envelope"></i>
+    </div>
+        {{ form.email.errors }}
+    <div class="form-group has-feedback">
+        {{ form.phone }}<i aria-hidden="true" class="form-control-feedback fa fa-phone"></i>
+    </div>
+        <p>{{ form.phone.errors }}</p>
+    <div class="form-group has-feedback">
+        {{ form.where }}<i aria-hidden="true" class="form-control-feedback fa fa-plane"></i>
+    </div>
+        {{ form.where.errors }}
+    <div class="form-group">
+        {{ form.budget }}{{ form.currency }}
+    </div>
+        {{ form.budget.errors }}
+    <div class='input-group date'>
+            {{ form.start_date }}
+            <span class="input-group-addon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+            </span>
+            {{ form.end_date }}
+            <span class="input-group-addon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+            </span>
+    </div>
+    <div class="form-group has-feedback">
+        {{ form.num_adults }}{{ form.num_kids }}
+    </div>
+        {{ form.num_adults.errors }}
+        {{ form.num_kids.errors }}
+    <div class="form-group">
+        {{ form.comment }}
+    </div>
+    <button class="btn btn-default btn-custom" type="submit">Отправить заявку</button>
+</form>

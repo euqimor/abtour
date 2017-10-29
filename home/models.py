@@ -21,6 +21,8 @@ mg_api_url = environ['mg_api_url']
 
 
 class HomePage(Page):
+    parent_page_types = []
+
     logo = models.ForeignKey('wagtailimages.Image', on_delete=models.SET_NULL, null=True, related_name='Логотип')
     carousel_title = models.TextField('Слоган', max_length=40, blank=True)
     intro_header = models.TextField('Заголовок', max_length=40, blank=True)
@@ -93,7 +95,7 @@ class HomePage(Page):
             FieldPanel('small_column4_header', classname='text-center'),
             FieldPanel('small_column4_body'),
         ], heading='Колонка 4 (Время работы)'),
-        InlinePanel('carousel_images', label='Carousel images'),
+        InlinePanel('carousel_images', label='Карусель изображений'),
     ]
 
     def serve(self, request, *args, **kwargs):
@@ -132,7 +134,7 @@ class HomePage(Page):
                 post(
                     mg_api_url,
                     auth=("api", mg_api_key),
-                    data={"from": "Сайт АБ-Тур <postmaster@sandboxeb23fad28ee149ebab351869ef8ce5bf.mailgun.org>",
+                    data={"from": "Сайт АБ-Тур <noreply@ab-tour.ru>",
                           "to": "romique@gmail.com, info@ab-tour.ru",
                           "subject": "Заявка от {}".format(data.name),
                           "text": email_body
@@ -173,6 +175,99 @@ class CarouselImage(Orderable):
         FieldPanel('caption'),
     ]
 
+
+class OffersPage(Page):
+    parent_page_types = [HomePage]
+    default_offer_image = models.ForeignKey(
+                'wagtailimages.Image',
+                on_delete=models.SET_NULL,
+                null=True,
+                related_name='+'
+            )
+
+    content_panels = Page.content_panels + [
+        ImageChooserPanel('default_offer_image'),
+        InlinePanel('special_offers', label='Спецпредложениe'),
+    ]
+
+    def serve(self, request, *args, **kwargs):
+        from home.forms import RequestForm
+        from django.contrib import messages
+
+        if request.method == 'POST':
+            form = RequestForm(request.POST)
+            if form.is_valid():
+                data = form.get_data()
+                data.save()
+
+                email_body = 'Имя: {}\n' \
+                             'Куда: {}\n' \
+                             'С: {}\n' \
+                             'По: {}\n' \
+                             'Взрослых: {}\n' \
+                             'Детей: {}\n' \
+                             'Бюджет: {} {}\n' \
+                             '\nКомментарии: {}\n\n' \
+                             'Телефон: {}\n' \
+                             'Email: {}\n'.format(
+                    data.name,
+                    data.where,
+                    data.start_date,
+                    data.end_date,
+                    data.num_adults,
+                    data.num_kids,
+                    data.budget,
+                    data.currency,
+                    data.comment,
+                    data.phone,
+                    data.email
+                )
+
+                post(
+                    mg_api_url,
+                    auth=("api", mg_api_key),
+                    data={"from": "Сайт АБ-Тур <noreply@ab-tour.ru>",
+                          "to": "romique@gmail.com, info@ab-tour.ru",
+                          "subject": "Заявка от {}".format(data.name),
+                          "text": email_body
+                          }
+                )
+                messages.info(request, 'Заявка принята, спасибо!')
+                return HttpResponseRedirect('/offers/')
+
+            else:
+                messages.info(request, 'Ошибка. Проверьте заполнение формы.')
+                return render(request, 'home/offers_page.html', {
+                    'page': self,
+                    'form': form,
+                    'form_failed': 'True',
+                })
+
+        else:
+            form = RequestForm()
+            return render(request, 'home/offers_page.html', {
+                'page': self,
+                'form': form,
+                })
+
+
+class SpecialOffer(Orderable):
+    page = ParentalKey(OffersPage, related_name='special_offers')
+    image = models.ForeignKey(
+                'wagtailimages.Image',
+                null=True,
+                blank=True,
+                on_delete=models.SET_NULL,
+                related_name='+'
+            )
+    title = models.TextField('Заголовок', max_length=40)
+    text = RichTextField('Текст')
+
+    panels = [
+        ImageChooserPanel('image'),
+        FieldPanel('title'),
+        FieldPanel('text'),
+    ]
 
 class TouristRequest(models.Model):
     name = models.CharField(max_length=100)

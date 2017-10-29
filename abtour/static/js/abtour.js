@@ -1,16 +1,4 @@
 $(document).ready(function(){
-  $('.owl-carousel').owlCarousel({
-      lazyLoad:true,
-      loop:true,
-      autoplay:true,
-      autoplayHoverPause:false,
-      animateOut: 'fadeOut',
-      nav:false,
-      dots:false,
-      mouseDrag: false,
-      touchDrag: false,
-      items:1
-  });
   AOS.init();
   datepicker();
   href_target_blank();
@@ -86,7 +74,14 @@ $('.no-right-click').contextmenu(function () {
    return false
 });
 
+function offerModal(id) {
+    $("#offerModal_"+id).modal();
+}
 
+function formModal(data='') {
+    $("#formModal").modal();
+    $("#id_comment")[0].value = data
+}
 
 
 //-------------------------------------------------------
