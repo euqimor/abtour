@@ -2,7 +2,7 @@
 
 {% load static wagtailcore_tags wagtailimages_tags %}
 
-{% block body_class %}template-homepage{% endblock %}
+{% block body_class %}template-homepage no-navbar-change{% endblock %}
 
 {% block extra_css %}
 {% endblock %}
@@ -10,45 +10,64 @@
 
 {% block content %}
 
-        <section class="deep-yellow mp-content">
+    <div style="background: white;min-height: 85px;"></div>
+
+    <section class="offers_content mp-content deep-yellow" style="padding: 30px 0 0 0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>{{ page.title }}</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <section class="offers_content deep-yellow mp-content">
+        {% if page.special_offers %}
         <div class="container">
         <div class="list-group">
-    {% for item in page.special_offers.all %}
-        <a href="javascript:void(0)" class="list-group-item">
-            {% if item.image %}
-                {% image item.image fill-60x60-c100 style="float:left;" %}
-            {% else %}
-                {% image page.default_offer_image fill-60x60-c100 style="float:left;" %}
-            {% endif %}
-            <h4 class="list-group-item-heading spec-offer" onclick="offerModal({{ item.id }})">{{ item.title }}</h4>
-            <div id="offerModal_{{ item.id }}" class="modal fade" role="dialog">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{{ item.title }}</h4>
-                  </div>
-                  <div class="modal-body spec-offer-body">
+            {% for item in page.special_offers.all %}
+                <a href="javascript:void(0)" class="list-group-item">
                     {% if item.image %}
                         {% image item.image fill-60x60-c100 style="float:left;" %}
                     {% else %}
                         {% image page.default_offer_image fill-60x60-c100 style="float:left;" %}
                     {% endif %}
-                    <h5 class="spec-offer">{{ item.text | richtext}}</h5>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn-custom-modal btn btn-default" onclick="formModal('Меня интересует спецпредложение \'{{ item.title }}\'')">Оставить заявку</button><button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                  </div>
+                    <h4 class="list-group-item-heading spec-offer" onclick="offerModal({{ item.id }})">{{ item.title }}</h4>
+                    <div id="offerModal_{{ item.id }}" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">{{ item.title }}</h4>
+                          </div>
+                          <div class="modal-body spec-offer-body">
+                            {% if item.image %}
+                                {% image item.image fill-60x60-c100 style="float:left;" %}
+                            {% else %}
+                                {% image page.default_offer_image fill-60x60-c100 style="float:left;" %}
+                            {% endif %}
+                            <h5 class="spec-offer">{{ item.text | richtext}}</h5>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn-custom-modal btn btn-default" onclick="formModal('Меня интересует спецпредложение \'{{ item.title }}\'')">Оставить заявку</button><button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h4>К сожалению, на данный момент спецпредложений нет</h4>
                 </div>
-              </div>
             </div>
-        </a>
-    {% endfor %}
+        {% endif %}
         </div>
         </div>
         </section>
-
-
 
     <div id="formModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -90,6 +109,20 @@
         {% endfor %}
     {% endif %}
 
+    {% with '' as small_columns_title %}
+    {% with page.bottom_section_text|richtext as small_columns_intro %}
+    {% with page.get_parent.specific.small_column1_header as small_column1_header %}
+    {% with page.get_parent.specific.small_column1_body|richtext as small_column1_body %}
+    {% with page.get_parent.specific.small_column2_header as small_column2_header %}
+    {% with page.get_parent.specific.small_column2_body|richtext as small_column2_body %}
+    {% with page.get_parent.specific.small_column3_header as small_column3_header %}
+    {% with page.get_parent.specific.small_column3_body|richtext as small_column3_body %}
+    {% with page.get_parent.specific.small_column4_header as small_column4_header %}
+    {% with page.get_parent.specific.small_column4_body|richtext as small_column4_body %}
+        {% include "./contacts_section.html"%}
+    {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+    {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+
 {#    <a href="#" class="scrollToTop" style="background: url({% static "img/scroll_to_top.png" %}) 0 0 / cover; display: block;"></a>#}
 
 {% endblock %}
@@ -98,7 +131,13 @@
 {%  block extra_js %}
     {% if form_failed %}
         <script type="text/javascript">
-            formModal('{{ form.comment.value }}')
+            formModal('{{ form.comment.value }}');
         </script>
     {% endif %}
+    <script type="text/javascript">
+        $('nav').addClass('shrink');
+        $('#enquire-btn').addClass('btn-shrink');
+        $('#logo').css("max-height", "70px");
+        $('#logo-link').css("padding-top", "7px");
+    </script>
 {% endblock %}

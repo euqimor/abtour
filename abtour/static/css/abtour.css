@@ -8404,10 +8404,16 @@ div.item:before {
     section.mp-content {
         padding: 100px 0
     }
+    section.offers_content {
+        padding: 50px 0;
+    }
 }
 @media (max-width: 767px) {
     section.mp-content {
         padding: 50px 0
+    }
+    section.offers_content {
+        padding: 25px 0;
     }
 }
 section.mp-content-half {

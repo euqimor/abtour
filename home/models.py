@@ -48,7 +48,6 @@ class HomePage(Page):
     small_column4_header = models.CharField('Заголовок 4', max_length=40, blank=True)
     small_column4_body = RichTextField('Текст 4', max_length=500, blank=True)
 
-
     content_panels = Page.content_panels + [
         ImageChooserPanel('logo'),
         FormSubmissionsPanel(),
@@ -118,18 +117,18 @@ class HomePage(Page):
                              '\nКомментарии: {}\n\n' \
                              'Телефон: {}\n' \
                              'Email: {}\n'.format(
-                    data.name,
-                    data.where,
-                    data.start_date,
-                    data.end_date,
-                    data.num_adults,
-                    data.num_kids,
-                    data.budget,
-                    data.currency,
-                    data.comment,
-                    data.phone,
-                    data.email
-                )
+                                data.name,
+                                data.where,
+                                data.start_date,
+                                data.end_date,
+                                data.num_adults,
+                                data.num_kids,
+                                data.budget,
+                                data.currency,
+                                data.comment,
+                                data.phone,
+                                data.email
+                                )
 
                 post(
                     mg_api_url,
@@ -178,6 +177,8 @@ class CarouselImage(Orderable):
 
 class OffersPage(Page):
     parent_page_types = [HomePage]
+    offers_intro = RichTextField('Описание', max_length=500, blank=True)
+    bottom_section_text = RichTextField('Нижняя секция', max_length=500, blank=True)
     default_offer_image = models.ForeignKey(
                 'wagtailimages.Image',
                 on_delete=models.SET_NULL,
@@ -186,6 +187,8 @@ class OffersPage(Page):
             )
 
     content_panels = Page.content_panels + [
+        FieldPanel('offers_intro'),
+        FieldPanel('bottom_section_text'),
         ImageChooserPanel('default_offer_image'),
         InlinePanel('special_offers', label='Спецпредложениe'),
     ]
@@ -210,18 +213,18 @@ class OffersPage(Page):
                              '\nКомментарии: {}\n\n' \
                              'Телефон: {}\n' \
                              'Email: {}\n'.format(
-                    data.name,
-                    data.where,
-                    data.start_date,
-                    data.end_date,
-                    data.num_adults,
-                    data.num_kids,
-                    data.budget,
-                    data.currency,
-                    data.comment,
-                    data.phone,
-                    data.email
-                )
+                                data.name,
+                                data.where,
+                                data.start_date,
+                                data.end_date,
+                                data.num_adults,
+                                data.num_kids,
+                                data.budget,
+                                data.currency,
+                                data.comment,
+                                data.phone,
+                                data.email
+                                )
 
                 post(
                     mg_api_url,
@@ -268,6 +271,7 @@ class SpecialOffer(Orderable):
         FieldPanel('title'),
         FieldPanel('text'),
     ]
+
 
 class TouristRequest(models.Model):
     name = models.CharField(max_length=100)
