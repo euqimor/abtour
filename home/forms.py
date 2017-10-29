@@ -14,7 +14,7 @@ class RequestForm(forms.Form):
     comment = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control input-lg', 'id':'id_comment', 'placeholder':'Комментарии и пожелания'}), label='Комментарии и пожелания', max_length=1000, required=False)
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control input-lg', 'id':'id_email', 'placeholder':'Ваш email'}), label='Ваша почта', required=False)
     phone_error_message = 'Пожалуйста, введите номер телефона в указанном формате'
-    phone = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control input-lg', 'id':'id_phone', 'maxlength':'15', 'name':'name', 'placeholder':'Ваш телефон', 'type':'text'}), label='Телефон (только цифры)', strip=True, validators=[RegexValidator(regex=r'^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$', message=phone_error_message)], required=False)
+    phone = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control input-lg', 'id':'id_phone', 'name':'name', 'placeholder':'Ваш телефон', 'type':'text'}), label='Телефон (только цифры)', strip=True, validators=[RegexValidator(regex=r'^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$', message=phone_error_message)], required=False)
 
     def get_data(self):
         obj = TouristRequest()

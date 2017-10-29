@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 from os import environ
-
 from requests import post
+from datetime import date, timedelta
 
 from django.db import models
 from django.shortcuts import render
@@ -265,11 +265,25 @@ class SpecialOffer(Orderable):
             )
     title = models.TextField('Заголовок', max_length=40)
     text = RichTextField('Текст')
+    expiry_date = models.DateField("Дата истечения", default=(date.today() + timedelta(days=7)))
 
     panels = [
         ImageChooserPanel('image'),
         FieldPanel('title'),
         FieldPanel('text'),
+        FieldPanel('expiry_date')
+    ]
+
+    @property
+    def is_expired(self):
+        return date.today() > self.expiry_date
+
+
+class contact_page(Page):
+    parent_page_types = [HomePage]
+
+    content_panels = Page.content_panels + [
+
     ]
 
 

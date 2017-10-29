@@ -27,35 +27,38 @@
         <div class="container">
         <div class="list-group">
             {% for item in page.special_offers.all %}
-                <a href="javascript:void(0)" class="list-group-item">
-                    {% if item.image %}
-                        {% image item.image fill-60x60-c100 style="float:left;" %}
-                    {% else %}
-                        {% image page.default_offer_image fill-60x60-c100 style="float:left;" %}
-                    {% endif %}
-                    <h4 class="list-group-item-heading spec-offer" onclick="offerModal({{ item.id }})">{{ item.title }}</h4>
-                    <div id="offerModal_{{ item.id }}" class="modal fade" role="dialog">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">{{ item.title }}</h4>
-                          </div>
-                          <div class="modal-body spec-offer-body">
-                            {% if item.image %}
-                                {% image item.image fill-60x60-c100 style="float:left;" %}
-                            {% else %}
-                                {% image page.default_offer_image fill-60x60-c100 style="float:left;" %}
-                            {% endif %}
-                            <h5 class="spec-offer">{{ item.text | richtext}}</h5>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn-custom-modal btn btn-default" onclick="formModal('Меня интересует спецпредложение \'{{ item.title }}\'')">Оставить заявку</button><button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                {% if not item.is_expired %}
+                    <a href="javascript:void(0)" class="list-group-item">
+                        {% if item.image %}
+                            {% image item.image fill-60x60-c100 style="float:left;" %}
+                        {% else %}
+                            {% image page.default_offer_image fill-60x60-c100 style="float:left;" %}
+                        {% endif %}
+                        <h4 class="list-group-item-heading spec-offer" onclick="offerModal({{ item.id }})">{{ item.title }}</h4>
+                        <div id="offerModal_{{ item.id }}" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">{{ item.title }}</h4>
+                              </div>
+                              <div class="modal-body spec-offer-body">
+                                {% if item.image %}
+                                    {% image item.image fill-60x60-c100 style="float:left;" %}
+                                {% else %}
+                                    {% image page.default_offer_image fill-60x60-c100 style="float:left;" %}
+                                {% endif %}
+                                <h5 class="spec-offer">{{ item.text | richtext}}</h5>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn-custom-modal btn btn-default" onclick="formModal('Здравствуйте! Меня интересует спецпредложение «{{ item.title }}».')">Оставить заявку</button><button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                </a>
+                    </a>
+                    <p>Истекает {{ item.expiry_date }}</p><br>
+                {% endif %}
             {% endfor %}
         {% else %}
             <div class="container">

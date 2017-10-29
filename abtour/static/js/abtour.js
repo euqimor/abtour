@@ -72,7 +72,8 @@ function offerModal(id) {
     $("#offerModal_"+id).modal();
 }
 
-function formModal(data='') {
+function formModal(data) {
+    data = typeof data !== 'undefined' ? data : '';
     $("#formModal").modal();
     $("#id_comment")[0].value = data
 }

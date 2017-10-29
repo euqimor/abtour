@@ -5373,7 +5373,7 @@ a.thumbnail:hover {
     margin-bottom: -1px;
     background-color: #fff;
     border: 1px solid #ddd;
-    min-height: 61px;
+    min-height: 62px;
 }
 .list-group-item:first-child {
     border-top-left-radius: 4px;

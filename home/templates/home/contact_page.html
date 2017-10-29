@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage no-navbar-change{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+
+{% block content %}
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript">
+    </script>
+
+    <div style="background: white;min-height: 85px;"></div>
+
+    <section class="mp-content" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map" style="width: 100%;min-height: 320px;height: 640px"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+
+{%  block extra_js %}
+    <script type="text/javascript">
+        $('nav').addClass('shrink');
+        $('#enquire-btn').addClass('btn-shrink');
+        $('#logo').css("max-height", "70px");
+        $('#logo-link').css("padding-top", "7px");
+    </script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        var myMap;
+
+        function init(){
+            myMap = new ymaps.Map("map", {
+                center: [55.76, 37.64],
+                zoom: 7
+            });
+        myPlacemark = new ymaps.Placemark([55.76, 37.64], { hintContent: 'Москва!', balloonContent: 'Столица России' });
+        myMap.geoObjects.add(myPlacemark);
+        }
+    </script>
+{% endblock %}
