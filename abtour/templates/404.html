@@ -1,12 +1,21 @@
 {% extends "base.html" %}
 
-{% block body_class %}template-404{% endblock %}
+{% block body_class %}template-404 no-navbar-change{% endblock %}
 
 {% block content %}
 
-    <img class="img-responsive" height="100px" id="logo" src="{{ logo.url }}" style="max-height: 100px;">
+    <div style="background: white;min-height: 85px;"></div>
 
     <h1>Страница не найдена</h1>
 
 {#    <h2>Sorry, this page could not be found.</h2>#}
+{% endblock %}
+
+{%  block extra_js %}
+    <script type="text/javascript">
+        $('nav').addClass('shrink');
+        $('#enquire-btn').addClass('btn-shrink');
+        $('#logo').css("max-height", "70px");
+        $('#logo-link').css("padding-top", "7px");
+    </script>
 {% endblock %}

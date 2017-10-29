@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  AOS.init();
   datepicker();
   href_target_blank();
   // href_section_scroll();
