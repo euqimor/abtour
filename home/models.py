@@ -176,6 +176,7 @@ class CarouselImage(Orderable):
 
 class OffersPage(Page):
     parent_page_types = [HomePage]
+    subtitle = models.TextField('Подзаголовок', max_length=100, blank=True)
     bottom_section_text = RichTextField('Нижняя секция', max_length=500, blank=True)
     default_offer_image = models.ForeignKey(
                 'wagtailimages.Image',
@@ -185,6 +186,7 @@ class OffersPage(Page):
             )
 
     content_panels = Page.content_panels + [
+        FieldPanel('subtitle'),
         FieldPanel('bottom_section_text'),
         ImageChooserPanel('default_offer_image'),
         InlinePanel('special_offers', label='Спецпредложениe'),

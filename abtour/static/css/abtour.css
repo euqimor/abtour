@@ -8105,6 +8105,9 @@ a:active,
 a:focus {
     text-decoration: none
 }
+a:hover {
+ cursor:pointer;
+}
 a:focus {
     outline: none
 }
