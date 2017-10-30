@@ -16,7 +16,6 @@ from wagtail.wagtailforms.edit_handlers import FormSubmissionsPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 mg_api_key = environ['mg_api_key']
-
 mg_api_url = environ['mg_api_url']
 
 
@@ -177,7 +176,6 @@ class CarouselImage(Orderable):
 
 class OffersPage(Page):
     parent_page_types = [HomePage]
-    offers_intro = RichTextField('Описание', max_length=500, blank=True)
     bottom_section_text = RichTextField('Нижняя секция', max_length=500, blank=True)
     default_offer_image = models.ForeignKey(
                 'wagtailimages.Image',
@@ -187,40 +185,30 @@ class OffersPage(Page):
             )
 
     content_panels = Page.content_panels + [
-        FieldPanel('offers_intro'),
         FieldPanel('bottom_section_text'),
         ImageChooserPanel('default_offer_image'),
         InlinePanel('special_offers', label='Спецпредложениe'),
     ]
 
     def serve(self, request, *args, **kwargs):
-        from home.forms import RequestForm
+        from home.forms import SpecOfferForm
         from django.contrib import messages
 
         if request.method == 'POST':
-            form = RequestForm(request.POST)
+            form = SpecOfferForm(request.POST)
             if form.is_valid():
                 data = form.get_data()
                 data.save()
 
                 email_body = 'Имя: {}\n' \
-                             'Куда: {}\n' \
-                             'С: {}\n' \
-                             'По: {}\n' \
                              'Взрослых: {}\n' \
                              'Детей: {}\n' \
-                             'Бюджет: {} {}\n' \
                              '\nКомментарии: {}\n\n' \
                              'Телефон: {}\n' \
                              'Email: {}\n'.format(
                                 data.name,
-                                data.where,
-                                data.start_date,
-                                data.end_date,
                                 data.num_adults,
                                 data.num_kids,
-                                data.budget,
-                                data.currency,
                                 data.comment,
                                 data.phone,
                                 data.email
@@ -231,7 +219,7 @@ class OffersPage(Page):
                     auth=("api", mg_api_key),
                     data={"from": "Сайт АБ-Тур <noreply@ab-tour.ru>",
                           "to": "romique@gmail.com, info@ab-tour.ru",
-                          "subject": "Заявка от {}".format(data.name),
+                          "subject": "Запрос на спецпредложение от {}".format(data.name),
                           "text": email_body
                           }
                 )
@@ -247,7 +235,7 @@ class OffersPage(Page):
                 })
 
         else:
-            form = RequestForm()
+            form = SpecOfferForm()
             return render(request, 'home/offers_page.html', {
                 'page': self,
                 'form': form,
@@ -281,9 +269,10 @@ class SpecialOffer(Orderable):
 
 class contact_page(Page):
     parent_page_types = [HomePage]
+    text = RichTextField('Основной текст', max_length=2000, blank=True)
 
     content_panels = Page.content_panels + [
-
+        FieldPanel('text'),
     ]
 
 
@@ -296,6 +285,15 @@ class TouristRequest(models.Model):
     where = models.CharField(max_length=100)
     budget = models.IntegerField()
     currency = models.CharField(max_length=100)
+    comment = models.CharField(max_length=10000)
+    email = models.EmailField()
+    phone = models.CharField(max_length=100)
+
+
+class SpecOfferRequest(models.Model):
+    name = models.CharField(max_length=100)
+    num_adults = models.IntegerField()
+    num_kids = models.IntegerField()
     comment = models.CharField(max_length=10000)
     email = models.EmailField()
     phone = models.CharField(max_length=100)

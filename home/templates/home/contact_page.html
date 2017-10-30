@@ -14,15 +14,36 @@
 
     <div style="background: white;min-height: 85px;"></div>
 
-    <section class="mp-content" id="about">
+    <section class="offers_content mp-content deep-yellow" style="padding: 30px 0 0 0">
         <div class="container">
             <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>{{ page.title }}</h3>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
-                    <div id="map" style="width: 100%;min-height: 320px;height: 640px"></div>
+                    <h5>{{ page.text|richtext }}</h5>
                 </div>
             </div>
         </div>
     </section>
+
+    <div id="map" style="width: 100%;min-height: 320px;height: 640px"></div>
+
+    {% with '' as small_columns_title %}
+    {% with page.bottom_section_text|richtext as small_columns_intro %}
+    {% with page.get_parent.specific.small_column1_header as small_column1_header %}
+    {% with page.get_parent.specific.small_column1_body|richtext as small_column1_body %}
+    {% with page.get_parent.specific.small_column2_header as small_column2_header %}
+    {% with page.get_parent.specific.small_column2_body|richtext as small_column2_body %}
+    {% with page.get_parent.specific.small_column3_header as small_column3_header %}
+    {% with page.get_parent.specific.small_column3_body|richtext as small_column3_body %}
+    {% with page.get_parent.specific.small_column4_header as small_column4_header %}
+    {% with page.get_parent.specific.small_column4_body|richtext as small_column4_body %}
+        {% include "./contacts_section.html"%}
+    {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+    {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
 
 {% endblock %}
 
@@ -40,11 +61,12 @@
 
         function init(){
             myMap = new ymaps.Map("map", {
-                center: [55.76, 37.64],
-                zoom: 7
+                center: [55.74082019, 37.43262866],
+                zoom: 16
             });
-        myPlacemark = new ymaps.Placemark([55.76, 37.64], { hintContent: 'Москва!', balloonContent: 'Столица России' });
+        myPlacemark = new ymaps.Placemark([55.74082019, 37.43262866], { hintContent: 'АБ-Тур', balloonContent: 'Вход со стороны автобусной остановки' });
         myMap.geoObjects.add(myPlacemark);
+        myMap.behaviors.disable(['scrollZoom'])
         }
     </script>
 {% endblock %}

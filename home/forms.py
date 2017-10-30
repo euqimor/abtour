@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator
-from .models import TouristRequest
+from .models import TouristRequest, SpecOfferRequest
 
 class RequestForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control input-lg', 'id':'id_name', 'maxlength':'100', 'name':'name', 'placeholder':'Ваше имя', 'type':'text'}), label= 'Ваше имя', max_length=100)
@@ -36,6 +36,37 @@ class RequestForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(RequestForm, self).clean()
+        if not (cleaned_data.get('email') or cleaned_data.get('phone')):
+            raise forms.ValidationError('Пожалуйста, оставьте телефон или email, чтобы мы могли с Вами связаться')
+        if not (cleaned_data.get('num_adults') or cleaned_data.get('num_kids')):
+            raise forms.ValidationError('Пожалуйста, укажите количество отдыхающих')
+        return cleaned_data
+
+
+class SpecOfferForm(forms.Form):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control input-lg', 'id':'id_name', 'maxlength':'100', 'name':'name', 'placeholder':'Ваше имя', 'type':'text'}), label= 'Ваше имя', max_length=100)
+    num_adults = forms.IntegerField(label='Взрослых', widget=forms.NumberInput(attrs={'class':'form-persons form-control input-lg', 'id':'id_adults', 'name':'name', 'placeholder':'Взрослых'}), min_value=0, max_value=50, required=False)
+    num_kids = forms.IntegerField(label='Детей', widget=forms.NumberInput(attrs={'class':'form-persons form-control input-lg', 'id':'id_kids', 'name':'name', 'placeholder':'Детей'}), min_value=0, max_value=50, required=False)
+    comment = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control input-lg', 'id':'id_comment', 'placeholder':'Комментарии и пожелания'}), label='Комментарии и пожелания', max_length=1000, required=False)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control input-lg', 'id':'id_email', 'placeholder':'Ваш email'}), label='Ваша почта', required=False)
+    phone_error_message = 'Пожалуйста, введите номер телефона в указанном формате'
+    phone = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control input-lg', 'id':'id_phone', 'name':'name', 'placeholder':'Ваш телефон', 'type':'text'}), label='Телефон (только цифры)', strip=True, validators=[RegexValidator(regex=r'^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$', message=phone_error_message)], required=False)
+
+    def get_data(self):
+        obj = SpecOfferRequest()
+        obj.name = self.cleaned_data['name']
+        obj.num_adults = self.cleaned_data['num_adults']
+        if self.cleaned_data['num_kids']:
+            obj.num_kids = self.cleaned_data['num_kids']
+        else:
+            obj.num_kids = 0
+        obj.comment = self.cleaned_data['comment']
+        obj.email = self.cleaned_data['email']
+        obj.phone = self.cleaned_data['phone']
+        return obj
+
+    def clean(self):
+        cleaned_data = super(SpecOfferForm, self).clean()
         if not (cleaned_data.get('email') or cleaned_data.get('phone')):
             raise forms.ValidationError('Пожалуйста, оставьте телефон или email, чтобы мы могли с Вами связаться')
         if not (cleaned_data.get('num_adults') or cleaned_data.get('num_kids')):

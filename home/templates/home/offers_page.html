@@ -77,10 +77,10 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Оставить заявку</h4>
+            <h4 class="modal-title">Запрос на спецпредложение</h4>
           </div>
           <div class="modal-body">
-              {% include "./form.html" %}
+              {% include "./form.html" with spec_offers_form=True %}
           </div>
         </div>
       </div>
