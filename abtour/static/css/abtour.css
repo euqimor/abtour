@@ -1283,6 +1283,9 @@ h2 {
 h3 {
     font-size: 24px
 }
+h3.compact {
+    font-size: 30px
+}
 .h4,
 h4 {
     font-size: 18px
@@ -8173,7 +8176,7 @@ ul {
     font-size: 3em;
     line-height: 1
 }
-.nila-ul li {
+.custom-ul li {
     padding-left: 1em;
     margin-bottom: 1.5em
 }
@@ -8847,11 +8850,11 @@ input#enter-msg-form.input-lg.msg-box {
 .cta-content h3 {
     margin-top: 100px
 }
-.nila-quote blockquote {
+.custom-quote blockquote {
     border-left: none;
     padding-top: 70px
 }
-.nila-quote blockquote p:before {
+.custom-quote blockquote p:before {
     padding-top: 70px;
     padding-left: 40px;
     content: '\201C';
@@ -8865,10 +8868,10 @@ input#enter-msg-form.input-lg.msg-box {
     color: rgb(46, 204, 113);
     text-shadow: 7px 14px 10px rgba(0, 0, 0, 0.1)
 }
-.nila-quote blockquote p {
+.custom-quote blockquote p {
     text-align: left
 }
-.nila-quote footer {
+.custom-quote footer {
     margin-right: 80px;
     text-align: right
 }
@@ -8932,21 +8935,21 @@ input#enter-msg-form.input-lg.msg-box {
 #location-icon {
     top: 11px
 }
-.nila-pills .active a {
+.custom-pills .active a {
     background: #f5f0e9
 }
 .nav-pills>.active>a,
 .nav-pills>.active>a:hover {
     background-color: rgb(46, 204, 113)
 }
-.nila-purple-bg {
+.custom-purple-bg {
     background-color: #374a8a;
     color: #FFF
 }
-.nila-purple-bg a {
+.custom-purple-bg a {
     color: #FFF
 }
-.nila-purple-bg h3 {
+.custom-purple-bg h3 {
     font-size: 30px
 }
 .mainheading-h3 {
@@ -9264,9 +9267,9 @@ li.active span.round-tabs.five {
     color: inherit;
     text-decoration: none
 }
-.nila-tabs *,
-.nila tabs *:before,
-.nila-tabs *:after {
+.custom-tabs *,
+.custom tabs *:before,
+.custom-tabs *:after {
     -webkit-box-sizing: border-box;
     box-sizing: border-box
 }
@@ -9278,13 +9281,13 @@ li.active span.round-tabs.five {
 .clearfix:after {
     clear: both
 }
-.nila-tabs a {
+.custom-tabs a {
     color: #2CC185;
     text-decoration: none;
     outline: none
 }
-.nila-tabs a:hover,
-.nila-tabs a:focus {
+.custom-tabs a:hover,
+.custom-tabs a:focus {
     color: #74777b
 }
 .support {
@@ -9306,7 +9309,7 @@ li.active span.round-tabs.five {
     overflow: hidden;
     opacity: 0
 }
-.nila-tabs.container>section {
+.custom-tabs.container>section {
     padding: 0;
     font-size: 1.25em;
     min-height: 100%
@@ -9955,8 +9958,8 @@ article .rich-text p {
 .affix-bottom {
     position: absolute
 }
-.nav.nav-pills.nav-stacked.nila-pills.nila-sidenav.affix-top,
-.nav.nav-pills.nav-stacked.nila-pills.nila-sidenav.affix-bottom {
+.nav.nav-pills.nav-stacked.custom-pills.custom-sidenav.affix-top,
+.nav.nav-pills.nav-stacked.custom-pills.custom-sidenav.affix-bottom {
     width: 245px
 }
 .affix-fix h3 {
@@ -9967,11 +9970,11 @@ article .rich-text p {
     padding-top: 100px;
     margin-top: -100px
 }
-.nila-sidenav {
+.custom-sidenav {
     font-size: 16px;
     margin-right: 20px
 }
-.nila-sidenav>li>a:hover {
+.custom-sidenav>li>a:hover {
     background-color: #2CC185;
     color: #FFF!important
 }
