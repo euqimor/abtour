@@ -67,7 +67,7 @@ class HomePage(Page):
         MultiFieldPanel([
             FieldPanel('column3_header', classname='text-center'),
             FieldPanel('column3_body'),
-        ], heading='Верхняя колонка 3 (Валюта)'),
+        ], heading='Верхняя колонка 3 (Глобус)'),
         MultiFieldPanel([
             FieldPanel('form_header', classname='text-center'),
             FieldPanel('form_intro'),
