@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /django-admin/
+sitemap: https://www.ab-tour.ru/sitemap.xml
